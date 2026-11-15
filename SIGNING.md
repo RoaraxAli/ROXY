@@ -38,10 +38,20 @@ touches this repository or a maintainer machine.
    - variable `SIGNPATH_ENABLED` = `true`
 5. Tag a release: `git tag v0.2.1 && git push origin v0.2.1`.
 
-`.github/workflows/release.yml` then builds both targets, submits `roxy.exe`
-for signing, downloads the signed file, and publishes the release with
-`SHA256SUMS.txt`. Until `SIGNPATH_ENABLED` is set, the signing job is skipped
-and releases stay unsigned — nothing breaks.
+The workflow is versioned at `signing/release-workflow.yml`. GitHub refuses to
+accept `.github/workflows/` changes from a token without the `workflow` scope,
+so it is installed with one command once your credentials allow it:
+
+```bash
+mkdir -p .github/workflows
+cp signing/release-workflow.yml .github/workflows/release.yml
+git add .github/workflows/release.yml && git commit -m "ci: enable signed releases" && git push
+```
+
+It then builds both targets, submits `roxy.exe` for signing, downloads the
+signed file, and publishes the release with `SHA256SUMS.txt`. Until
+`SIGNPATH_ENABLED` is set, the signing job is skipped and releases stay
+unsigned — nothing breaks.
 
 Verify a signed build locally:
 
