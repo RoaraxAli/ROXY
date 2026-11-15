@@ -5,7 +5,11 @@ cd "$(dirname "$0")"
 
 # Private build settings (self-hosted manifest URL, signing hooks) live in
 # local.env, which is gitignored — the published repository stays clean.
-if [ -f local.env ]; then . ./local.env; fi
+if [ -f local.env ]; then
+  . ./local.env
+  # local.env must reach cargo, which only reads exported variables.
+  [ -n "${ROXY_MANIFEST:-}" ] && export ROXY_MANIFEST
+fi
 
 source "$HOME/.cargo/env"
 rustup target add x86_64-pc-windows-gnu >/dev/null 2>&1 || true
