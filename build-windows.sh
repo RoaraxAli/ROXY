@@ -62,6 +62,9 @@ sign_windows() {
 
 mkdir -p ../dist/roxy
 cp "$EXE" ../dist/roxy/roxy.exe
+if [ -z "${ROXY_SIGN_CERT:-}" ]; then
+  echo "note: roxy.exe is UNSIGNED — Windows will show \"unknown publisher\" on first run"
+fi
 sign_windows ../dist/roxy/roxy.exe
 cp "$BIN" ../dist/roxy/roxy-linux
 cp README.md ../dist/roxy/README.md
