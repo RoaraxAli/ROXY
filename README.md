@@ -63,6 +63,31 @@ The resulting `.exe` imports only system DLLs (kernel32, user32, gdi32,
 opengl32, …) — copy it to Windows and double-click; no installer and no runtime
 needed.
 
+### Code signing (removes "unknown publisher")
+
+Windows shows **“Windows protected your PC — unknown publisher”** for any binary
+without an Authenticode signature. That message is about identity, not safety,
+and it cannot be removed in code: it needs a certificate issued to a verified
+publisher. Until a release is signed, either accept the prompt via **More info →
+Run anyway**, or clear the download mark first:
+
+```powershell
+Unblock-File .\roxy.exe
+```
+
+If you own a code-signing certificate, `build-windows.sh` signs the executable
+before zipping it. Set these in `local.env` (gitignored) or the environment:
+
+```bash
+ROXY_SIGN_CERT=/path/to/cert.pfx
+ROXY_SIGN_PASS=…                                  # optional; prompted otherwise
+ROXY_SIGN_URL=https://timestamp.digicert.com      # "none" to skip timestamping
+```
+
+It needs `osslsigncode` (`apt install osslsigncode`). The build timestamps the
+signature, retries without a timestamp if the time-stamp authority is
+unreachable, and falls back to an unsigned binary rather than failing.
+
 Windows releases are currently unsigned. Windows therefore cannot show a
 verified publisher, and SmartScreen may warn about an unrecognized app. The
 release page identifies the ROXY project as publisher and provides SHA-256

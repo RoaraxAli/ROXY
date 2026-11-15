@@ -20,8 +20,49 @@ cargo build --release --target x86_64-pc-windows-gnu
 EXE="target/x86_64-pc-windows-gnu/release/roxy.exe"
 BIN="target/release/roxy"
 
+# Optional Authenticode signing. Without a certificate the binary ships
+# unsigned and Windows will show "unknown publisher"; with one, the publisher
+# name appears in SmartScreen and the file properties.
+#
+# Set these in local.env (gitignored) to produce a signed build:
+#   ROXY_SIGN_CERT=/path/to/cert.pfx
+#   ROXY_SIGN_PASS=secret            # omit to be prompted by osslsigncode
+#   ROXY_SIGN_URL=https://timestamp.digicert.com   ("none" skips timestamping)
+sign_windows() {
+  local exe="$1"
+  [ -n "${ROXY_SIGN_CERT:-}" ] || return 0
+  if ! command -v osslsigncode >/dev/null 2>&1; then
+    echo "warning: ROXY_SIGN_CERT is set but osslsigncode is missing" >&2
+    echo "         install it (apt install osslsigncode) — shipping an UNSIGNED build" >&2
+    return 0
+  fi
+
+  local base=(-pkcs12 "$ROXY_SIGN_CERT")
+  [ -n "${ROXY_SIGN_PASS:-}" ] && base+=(-pass "$ROXY_SIGN_PASS")
+  base+=(-h sha256 -n "ROXY" -i "https://github.com/RoaraxAli/ROXY" -in "$exe")
+
+  # Try with a timestamp first (a signature without one expires with the
+  # certificate). Fall back to an untimestamped signature if the TSA is down,
+  # then leave the binary unsigned rather than failing the whole build.
+  local ts="${ROXY_SIGN_URL:-https://timestamp.digicert.com}"
+  if [ "$ts" != "none" ] && \
+     osslsigncode sign "${base[@]}" -ts "$ts" -out "$exe.signed" >/dev/null 2>&1; then
+    mv "$exe.signed" "$exe"
+    echo "signed (timestamped): $exe"
+    return 0
+  fi
+  if osslsigncode sign "${base[@]}" -out "$exe.signed" >/dev/null 2>&1; then
+    mv "$exe.signed" "$exe"
+    echo "signed (no timestamp — renew before the certificate expires): $exe"
+    return 0
+  fi
+  rm -f "$exe.signed"
+  echo "warning: signing failed — shipping an UNSIGNED build" >&2
+}
+
 mkdir -p ../dist/roxy
 cp "$EXE" ../dist/roxy/roxy.exe
+sign_windows ../dist/roxy/roxy.exe
 cp "$BIN" ../dist/roxy/roxy-linux
 cp README.md ../dist/roxy/README.md
 VERSION=$(sed -n 's/^version = "\([^"]*\)"/\1/p' Cargo.toml | head -1)
