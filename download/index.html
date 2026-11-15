@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ROXY — download</title>
+<meta name="description" content="Download ROXY for Windows x64 or Linux ARM64, verify the SHA-256 checksum, and connect your first model." />
+<style>
+  :root{--bg:#07070a;--panel:#101015;--border:#23232c;--soft:#1a1a21;--text:#ececf1;--dim:#9c9caa;--faint:#6b6b7a;--accent:#c8f751;--mono:ui-monospace,"JetBrains Mono",Menlo,Consolas,monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(900px 500px at 15% -10%,rgba(200,247,81,.07),transparent 60%),var(--bg);color:var(--text);font-family:Inter,-apple-system,"Segoe UI",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:880px;margin:0 auto;padding:56px 24px 64px}
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:34px}
+  .mark{width:40px;height:40px;border-radius:12px;background:var(--accent);display:grid;place-items:center;flex:none}
+  .mark svg{width:22px;height:22px}
+  h1{font-size:15px;letter-spacing:6px;margin:0;font-weight:700}
+  .tag{font-size:9.5px;letter-spacing:2.6px;color:var(--faint);text-transform:uppercase;margin-top:2px}
+  .lede{color:var(--dim);font-size:15px;max-width:60ch;margin:0 0 26px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}}
+  a.card{display:block;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px;transition:border-color .15s,transform .15s}
+  a.card:hover{border-color:#3a3a46;transform:translateY(-2px)}
+  .kicker{font-size:9.5px;letter-spacing:2px;color:var(--accent);font-weight:700;text-transform:uppercase}
+  .title{font-size:15px;font-weight:600;margin:7px 0 3px}
+  .meta{font-size:12px;color:var(--faint);font-family:var(--mono)}
+  h2{font-size:17px;margin:40px 0 10px}
+  ol,ul{color:var(--dim);font-size:13.5px;padding-left:20px;margin:0}
+  li{margin-bottom:7px}
+  code{font-family:var(--mono);font-size:12.5px;color:var(--accent)}
+  pre{background:#0a0a0e;border:1px solid var(--border);border-radius:11px;padding:14px 16px;overflow-x:auto;font-size:12px;color:#d6d6e0}
+  pre code{color:inherit;background:none;border:0;padding:0}
+  .notice{margin-top:26px;padding:16px 18px;border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:11px;color:var(--dim);font-size:12.5px;line-height:1.7}
+  .notice b{color:var(--text)}
+  .warn{border-left-color:#ffb84d}
+  details{margin-top:22px;border-top:1px solid var(--soft);padding-top:16px}
+  summary{color:var(--dim);cursor:pointer;font-size:12.5px}
+  summary::after{content:" +";color:var(--faint)}
+  pre.sums{margin-top:12px;color:var(--faint);font-size:10.5px;white-space:pre-wrap;overflow-wrap:anywhere}
+  .foot{margin-top:34px;font-size:10.5px;letter-spacing:1.2px;color:var(--faint);font-family:var(--mono)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <div class="mark" aria-label="ROXY">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M9 26V6h9.5a6 6 0 0 1 0 12H9m8 0 8 8" fill="none" stroke="#07070a" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div>
+      <h1>ROXY</h1>
+      <div class="tag">one session · every model</div>
+    </div>
+  </div>
+
+  <p class="lede">
+    A native Rust desktop client for every model you have access to — hosted APIs,
+    local agent CLIs, OpenCode and a 9Router priority fallback. One conversation,
+    switch mid-thread, nothing lost.
+  </p>
+
+  <div class="grid">
+    <a class="card" href="roxy-windows-x64.zip">
+      <div class="kicker">Windows · x64</div>
+      <div class="title">ROXY for Windows</div>
+      <div class="meta">zip · roxy.exe + README</div>
+    </a>
+    <a class="card" href="roxy.exe">
+      <div class="kicker">Direct</div>
+      <div class="title">roxy.exe</div>
+      <div class="meta">x64 · single file · no installer</div>
+    </a>
+    <a class="card" href="roxy-linux">
+      <div class="kicker">Linux · ARM64</div>
+      <div class="title">ROXY for Linux</div>
+      <div class="meta">aarch64 · chmod +x to run</div>
+    </a>
+    <a class="card" href="README.md">
+      <div class="kicker">Docs</div>
+      <div class="title">README</div>
+      <div class="meta">providers · routing · build</div>
+    </a>
+  </div>
+
+  <h2>Install</h2>
+  <ol>
+    <li><b>Windows:</b> extract the ZIP, move <code>roxy.exe</code> to a folder your account can write (for example <code>%LOCALAPPDATA%\Programs\ROXY</code>), then run it.</li>
+    <li><b>Linux:</b> <code>chmod +x roxy-linux &amp;&amp; ./roxy-linux</code></li>
+    <li>Open <b>Models</b>, connect an API provider or install an agent CLI, then pick a model in the composer.</li>
+  </ol>
+
+  <pre><code># Linux, one line
+curl -fL -o roxy roxy-linux && chmod +x roxy && ./roxy</code></pre>
+
+  <div class="notice">
+    <b>Updates happen in the app.</b> ROXY checks for a new release at launch and shows
+    a progress bar while it downloads and installs — no terminal window, no manual
+    download. Manual check: Settings → About.
+  </div>
+
+  <div class="notice warn">
+    <b>Windows publisher.</b> Builds are currently unsigned, so Windows cannot show a
+    verified publisher and SmartScreen may warn. Verify the checksum below before
+    running, and only bypass a warning if you trust the source.
+  </div>
+
+  <details>
+    <summary>Verify the download (SHA-256)</summary>
+    <p class="meta" style="margin:10px 0 0">PowerShell: <code>Get-FileHash .\roxy-windows-x64.zip -Algorithm SHA256</code> · Linux: <code>sha256sum roxy-linux</code></p>
+    <pre class="sums" id="checksums">Loading checksums…</pre>
+  </details>
+
+  <div class="foot">BUILT ON OPENCODE &amp; 9ROUTER · NO TELEMETRY</div>
+</div>
+<script>
+  fetch('SHA256SUMS.txt')
+    .then(r => r.ok ? r.text() : Promise.reject())
+    .then(text => {
+      const labels = { 'roxy-windows-x64.zip': 'Windows ZIP', 'roxy.exe': 'Windows EXE', 'roxy-linux': 'Linux ARM64' };
+      document.getElementById('checksums').textContent = text.trim().split(/\r?\n/)
+        .filter(Boolean)
+        .map(line => { const [hash, file] = line.trim().split(/\s+/); return `${labels[file] || file}  ${hash}`; })
+        .join('\n');
+    })
+    .catch(() => { document.getElementById('checksums').textContent = 'Checksum file unavailable.'; });
+</script>
+</body>
+</html>

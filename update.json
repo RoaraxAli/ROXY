@@ -1,0 +1,5 @@
+{
+  "version": "0.2.0",
+  "windows_x64": "https://github.com/RoaraxAli/ROXY/releases/latest/download/roxy.exe",
+  "linux_aarch64": "https://github.com/RoaraxAli/ROXY/releases/latest/download/roxy-linux"
+}

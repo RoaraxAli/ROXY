@@ -1,0 +1,20 @@
+[package]
+name = "roxy"
+version = "0.2.0"
+edition = "2021"
+description = "ROXY — one session, every model"
+publish = false
+
+[dependencies]
+eframe = { version = "0.32.3", default-features = false, features = ["glow", "x11", "wayland", "default_fonts"] }
+egui = "0.32.3"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+png = "0.18"
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+strip = true
+panic = "abort"

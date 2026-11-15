@@ -1,0 +1,11 @@
+# Build artifacts
+/target
+/dist
+*.exe
+*.zip
+
+# Private, machine-specific build settings (manifest URL, publish dir).
+local.env
+
+# OS noise
+.DS_Store
