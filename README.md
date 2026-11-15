@@ -88,6 +88,10 @@ It needs `osslsigncode` (`apt install osslsigncode`). The build timestamps the
 signature, retries without a timestamp if the time-stamp authority is
 unreachable, and falls back to an unsigned binary rather than failing.
 
+ROXY is applying to the free open-source signing programmes (SignPath
+Foundation and Certum); see [SIGNING.md](SIGNING.md) for the current state, the
+CI workflow and the exact configuration required.
+
 Windows releases are currently unsigned. Windows therefore cannot show a
 verified publisher, and SmartScreen may warn about an unrecognized app. The
 release page identifies the ROXY project as publisher and provides SHA-256

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SignPath artifact configuration: sign the bare Windows executable.
+
+  Used by .github/workflows/release.yml (`artifact-configuration-slug: roxy-exe`).
+  SignPath applies an Authenticode signature with a SHA-256 digest and a
+  trusted timestamp, so the signature outlives the certificate.
+-->
+<artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1">
+  <pe-file path="roxy.exe">
+    <authenticode-sign/>
+  </pe-file>
+</artifact-configuration>
